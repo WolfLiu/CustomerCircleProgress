@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,7 +19,6 @@ import java.util.TimerTask;
  * Created by park on 15/9/14.
  */
 public class CustomerCircleProgress extends View {
-    private final int EVENT_END_PROGRESS = 1;
     private Timer timer;
     /**
      * 从105度开始画弧
@@ -271,22 +268,9 @@ public class CustomerCircleProgress extends View {
                     mCompletedLineCountPer++;
                 }
                 else {
-                    mHandler.sendEmptyMessage(EVENT_END_PROGRESS);
+                    timer.cancel();
                 }
             }
         }, 0, duration / mCompletedLineCount);
     }
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case EVENT_END_PROGRESS:
-                    timer.cancel();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 }
